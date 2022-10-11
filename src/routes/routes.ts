@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { PrismaAccountRepository } from './repositories/implementations/PrismaAccountRepository';
-import { CreateAccountUseCase } from './usecases/CreateAccountUseCase';
-import { ListAccountUseCase } from './usecases/ListAccountUseCase';
+import { PrismaAccountRepository } from '../repositories/implementations/PrismaAccountRepository';
+import { CreateAccountUseCase } from '../usecases/CreateAccountUseCase';
+import { ListAccountUseCase } from '../usecases/ListAccountUseCase';
 
 const accountRoutes = Router();
 
