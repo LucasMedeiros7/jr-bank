@@ -1,0 +1,29 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../src/infra/dev.db"
+}
+
+model Account {
+  account_id String   @id @default(uuid())
+  name       String
+  password   String
+  cpf        String   @unique
+  balance    Int      @default(50000)
+  created_at DateTime @default(now())
+
+  @@map("accounts")
+}
+
+model Transfer {
+  transferId             String   @id @default(uuid())
+  account_origin_id      String
+  account_destination_id String
+  amount                 Int
+  created_at             DateTime @default(now())
+
+  @@map("transfers")
+}
