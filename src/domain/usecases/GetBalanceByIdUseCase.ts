@@ -1,7 +1,7 @@
 import {
   IAccountRepository,
-  IBalanceDTO,
-} from '../../repositories/IAccountRepository';
+  IBalanceDTO
+} from '../repositories/IAccountRepository';
 
 export class GetBalanceByIdUseCase {
   constructor(private accountRepository: IAccountRepository) {}
