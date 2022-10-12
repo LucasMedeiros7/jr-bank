@@ -1,6 +1,6 @@
-import { IAccountRepository } from '../repositories/IAccountRepository';
+import { IAccountRepository } from '../../repositories/IAccountRepository';
 
-export class ListAccountUseCase {
+export class ListAccountsUseCase {
   constructor(private accountRepository: IAccountRepository) {}
 
   async execute() {

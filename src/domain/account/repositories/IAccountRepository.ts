@@ -6,7 +6,7 @@ export interface ICreateAccountDTO {
   password: string;
 }
 
-export interface ReponseBalance {
+export interface IBalanceDTO {
   account_id: string;
   balance: number;
 }
@@ -14,5 +14,5 @@ export interface ReponseBalance {
 export interface IAccountRepository {
   create({ name, password, cpf }: ICreateAccountDTO): Promise<void>;
   getAll(): Promise<Account[]>;
-  getBalanceById(accountId: string): Promise<ReponseBalance>;
+  getBalanceById(accountId: string): Promise<IBalanceDTO>;
 }

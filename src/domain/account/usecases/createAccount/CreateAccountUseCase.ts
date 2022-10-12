@@ -1,4 +1,4 @@
-import { IAccountRepository } from '../repositories/IAccountRepository';
+import { IAccountRepository } from '../../repositories/IAccountRepository';
 
 interface IRequest {
   cpf: string;
@@ -9,7 +9,7 @@ interface IRequest {
 export class CreateAccountUseCase {
   constructor(private accountRepository: IAccountRepository) {}
 
-  async execute({ name, password, cpf }: IRequest) {
+  async execute({ name, password, cpf }: IRequest): Promise<void> {
     await this.accountRepository.create({ name, password, cpf });
   }
 }

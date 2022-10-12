@@ -4,7 +4,7 @@ import { prisma } from '../db/database';
 import {
   IAccountRepository,
   ICreateAccountDTO,
-  ReponseBalance,
+  IBalanceDTO,
 } from '../../domain/account/repositories/IAccountRepository';
 
 export class PrismaAccountRepository implements IAccountRepository {
@@ -23,7 +23,7 @@ export class PrismaAccountRepository implements IAccountRepository {
     return accounts;
   }
 
-  async getBalanceById(accountId: string): Promise<ReponseBalance> {
+  async getBalanceById(accountId: string): Promise<IBalanceDTO> {
     const balance = await prisma.account.findFirst({
       where: {
         account_id: accountId,
