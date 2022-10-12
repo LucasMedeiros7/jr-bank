@@ -3,21 +3,21 @@ import { Router } from 'express';
 import {
   makeListAccountsController,
   makeCreateAccountController,
-  makeGetBalanceByIdController,
+  makeGetBalanceByIdController
 } from '../factories/accountControllersFactories';
 
 const accountRoutes = Router();
 
-accountRoutes.post('/', (request, response) =>
-  makeCreateAccountController().handle(request, response),
-);
-
-accountRoutes.get('/', async (request, response) => {
-  makeListAccountsController().handle(request, response);
+accountRoutes.post('/', (req, res) => {
+  makeCreateAccountController().handle(req, res);
 });
 
-accountRoutes.get('/:account_id/balance', async (request, response) => {
-  makeGetBalanceByIdController().handle(request, response);
+accountRoutes.get('/', async (req, res) => {
+  makeListAccountsController().handle(req, res);
+});
+
+accountRoutes.get('/:account_id/balance', async (req, res) => {
+  makeGetBalanceByIdController().handle(req, res);
 });
 
 export { accountRoutes };
