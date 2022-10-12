@@ -1,4 +1,4 @@
-import { Account } from '@prisma/client';
+import { Account } from '../entities/Account';
 
 export interface ICreateAccountDTO {
   cpf: string;

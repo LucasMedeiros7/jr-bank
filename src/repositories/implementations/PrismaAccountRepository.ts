@@ -1,4 +1,4 @@
-import { Account } from '@prisma/client';
+import { Account } from '../../entities/Account';
 import { prisma } from '../../infra/database';
 
 import {
@@ -24,7 +24,7 @@ export class PrismaAccountRepository implements IAccountRepository {
   }
 
   async getBalanceById(accountId: string): Promise<ReponseBalance> {
-    const [balance] = await prisma.account.findMany({
+    const balance = await prisma.account.findFirst({
       where: {
         account_id: accountId,
       },
