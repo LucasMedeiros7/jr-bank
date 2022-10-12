@@ -1,11 +1,11 @@
-import { Account } from '../../entities/Account';
-import { prisma } from '../../infra/database';
+import { Account } from '../../domain/account/entities/Account';
+import { prisma } from '../db/database';
 
 import {
   IAccountRepository,
   ICreateAccountDTO,
   ReponseBalance,
-} from '../IAccountRepository';
+} from '../../domain/account/repositories/IAccountRepository';
 
 export class PrismaAccountRepository implements IAccountRepository {
   async create({ name, password, cpf }: ICreateAccountDTO): Promise<void> {
