@@ -13,20 +13,20 @@ describe('Create account', () => {
   it('should create an account', async () => {
     await createAccountUseCase.execute({
       name: 'fakename',
-      cpf: 'fakecpf123',
+      cpf: '011.144.380-65',
       password: 'fakepaswword'
     });
 
-    expect(accountRepository.accounts[0].cpf).toBe('fakecpf123');
-    expect(accountRepository.accounts[0].name).toBe('fakename');
-    expect(accountRepository.accounts[0].password).toBe('fakepaswword');
+    const account = await accountRepository.getByCPF('011.144.380-65');
+
+    expect(account.cpf).toBe('011.144.380-65');
   });
 
   it('should return an error if any parameter is not passed', async () => {
     try {
       await createAccountUseCase.execute({
         name: '',
-        cpf: 'fakecpf123',
+        cpf: '011.144.380-65',
         password: ''
       });
     } catch (err) {
@@ -36,9 +36,9 @@ describe('Create account', () => {
 
     try {
       await createAccountUseCase.execute({
-        name: 'anyname',
+        name: 'fakename',
         cpf: '',
-        password: 'anypassword'
+        password: 'fakepaswword'
       });
     } catch (err) {
       expect(err).toBeInstanceOf(Error);
@@ -51,9 +51,9 @@ describe('Create account', () => {
 
     try {
       await createAccountUseCase.execute({
-        name: 'anyname',
-        cpf: '',
-        password: 'anypassword'
+        name: 'fakename',
+        cpf: '12345678912',
+        password: 'fakepaswword'
       });
     } catch (err) {
       error = err.message;

@@ -1,3 +1,4 @@
+import { validateCPF } from '../../utils/validateCPF';
 import { IAccountRepository } from '../repositories/IAccountRepository';
 
 interface IRequest {
@@ -14,12 +15,14 @@ export class CreateAccountUseCase {
       throw new Error('Missing params: name, password or cpf');
     }
 
-    // const isValidCPF = validateCPF(cpf);
+    cpf = validateCPF(cpf);
+
+    if (cpf === 'Invalid cpf') {
+      throw new Error(cpf);
+    }
+
     // const hashedPassword = hashPassword(password);
 
-    // if (!isValidCPF) {
-    //   throw new Error('Invalid cpf');
-    // }
     const accountAlreadyExists = await this.accountRepository.getByCPF(cpf);
 
     if (accountAlreadyExists) {
