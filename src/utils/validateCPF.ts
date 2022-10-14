@@ -12,32 +12,15 @@ const invalidsCPFs = [
 ];
 
 export function validateCPF(strCPF: string): string {
-  let sum = 0;
-  let rest: number;
-
-  let cpf = clearCharactersFromCPF(strCPF);
+  const cpf = clearCharactersFromCPF(strCPF);
 
   if (invalidsCPFs.includes(cpf)) {
     return 'Invalid cpf';
   }
 
-  for (let i = 1; i <= 9; i++) {
-    sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
-    rest = (sum * 10) % 11;
+  if (!validateDigits(cpf)) {
+    return 'Invalid cpf';
   }
-
-  if (rest == 10 || rest == 11) rest = 0;
-  if (rest != parseInt(cpf.substring(9, 10))) return 'Invalid cpf';
-
-  sum = 0;
-
-  for (let i = 1; i <= 10; i++) {
-    sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
-    rest = (sum * 10) % 11;
-  }
-
-  if (rest == 10 || rest == 11) rest = 0;
-  if (rest != parseInt(cpf.substring(10, 11))) return 'Invalid cpf';
 
   return addCharactersToCPF(cpf);
 }
@@ -45,6 +28,33 @@ export function validateCPF(strCPF: string): string {
 function clearCharactersFromCPF(cpf: string): string {
   cpf = cpf.replace(/[^\d]+/g, '');
   return cpf;
+}
+
+function validateDigits(cpf: string): boolean {
+  let sum = 0;
+  let rest: number;
+
+  for (let i = 0; i < 9; i++) {
+    sum += parseInt(cpf[i]) * (11 - i - 1);
+    rest = (sum * 10) % 11;
+  }
+
+  if (rest != parseInt(cpf[9])) {
+    return false;
+  }
+
+  sum = 0;
+
+  for (let i = 0; i < 10; i++) {
+    sum += parseInt(cpf[i]) * (12 - i - 1);
+    rest = (sum * 10) % 11;
+  }
+
+  if (rest != parseInt(cpf[cpf.length - 1])) {
+    return false;
+  }
+
+  return true;
 }
 
 function addCharactersToCPF(cpf: string): string {
