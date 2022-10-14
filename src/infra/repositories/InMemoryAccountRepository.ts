@@ -1,10 +1,10 @@
-import { Account } from '../../domain/entities/Account';
 import { v4 as uuidv4 } from 'uuid';
 
+import { Account } from '../../domain/entities/Account';
 import {
   IAccountRepository,
-  ICreateAccountDTO,
-  IBalanceDTO
+  IBalanceDTO,
+  ICreateAccountDTO
 } from '../../domain/repositories/IAccountRepository';
 
 export class InMemoryAccountRepository implements IAccountRepository {
@@ -27,9 +27,15 @@ export class InMemoryAccountRepository implements IAccountRepository {
     this.accounts.push(account);
   }
 
+  async getByCPF(cpf: string): Promise<Account> {
+    const account = this.accounts.find((account) => account.cpf === cpf);
+    return account;
+  }
+
   getAll(): Promise<Account[]> {
     throw new Error('Method not implemented.');
   }
+
   getBalanceById(accountId: string): Promise<IBalanceDTO> {
     throw new Error('Method not implemented.');
   }

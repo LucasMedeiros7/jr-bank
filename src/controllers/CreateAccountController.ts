@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { CreateAccountUseCase } from '../domain/usecases/CreateAccountUseCase';
 import { PrismaAccountRepository } from '../infra/repositories/PrismaAccountRepository';
 
@@ -9,9 +10,12 @@ class CreateAccountController {
     const accountRepository = new PrismaAccountRepository();
     const createAccountUseCase = new CreateAccountUseCase(accountRepository);
 
-    await createAccountUseCase.execute({ name, cpf, password });
-
-    return response.sendStatus(201);
+    try {
+      await createAccountUseCase.execute({ name, cpf, password });
+      return response.sendStatus(201);
+    } catch (e) {
+      return response.status(500).json({ error: e.message });
+    }
   }
 }
 

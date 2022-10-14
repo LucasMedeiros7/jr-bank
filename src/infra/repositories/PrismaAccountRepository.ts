@@ -1,11 +1,12 @@
 import { Account } from '../../domain/entities/Account';
-import { prisma } from '../db/database';
 
 import {
   IAccountRepository,
-  ICreateAccountDTO,
-  IBalanceDTO
+  IBalanceDTO,
+  ICreateAccountDTO
 } from '../../domain/repositories/IAccountRepository';
+
+import { prisma } from '../db/database';
 
 export class PrismaAccountRepository implements IAccountRepository {
   async create({ name, password, cpf }: ICreateAccountDTO): Promise<void> {
@@ -16,6 +17,11 @@ export class PrismaAccountRepository implements IAccountRepository {
         cpf
       }
     });
+  }
+
+  async getByCPF(cpf: string): Promise<Account> {
+    const account = await prisma.account.findFirst({ where: { cpf } });
+    return account;
   }
 
   async getAll(): Promise<Account[]> {

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { GetBalanceByIdUseCase } from '../domain/usecases/GetBalanceByIdUseCase';
 import { PrismaAccountRepository } from '../infra/repositories/PrismaAccountRepository';
 
