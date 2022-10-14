@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "testando": "tsnd src/infra/repositories/PrismaAccountRepository.ts",
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/server.ts",
     "test": "jest",
     "test:watch": "jest --watchAll"

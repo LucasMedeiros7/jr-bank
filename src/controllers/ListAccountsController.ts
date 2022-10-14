@@ -9,6 +9,13 @@ class ListAccountsController {
     const listAccountsUseCase = new ListAccountsUseCase(accountRepository);
 
     const accounts = await listAccountsUseCase.execute();
+
+    if (!accounts.length) {
+      return response.status(404).json({ message: 'Accounts not found' });
+    }
+
+    accounts.forEach((account) => account.password = undefined);
+
     return response.json(accounts);
   }
 }

@@ -20,7 +20,7 @@ export class PrismaAccountRepository implements IAccountRepository {
   }
 
   async getByCPF(cpf: string): Promise<Account> {
-    const account = await prisma.account.findFirst({ where: { cpf } });
+    const account = await prisma.account.findUnique({ where: { cpf } });
     return account;
   }
 
@@ -30,7 +30,7 @@ export class PrismaAccountRepository implements IAccountRepository {
   }
 
   async getBalanceById(accountId: string): Promise<IBalanceDTO> {
-    const balance = await prisma.account.findFirst({
+    const balance = await prisma.account.findUnique({
       where: {
         account_id: accountId
       },

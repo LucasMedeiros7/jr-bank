@@ -12,6 +12,10 @@ class GetBalanceByIdController {
 
     const balance = await getBalanceById.execute(account_id);
 
+    if (!balance) {
+      return response.status(404).json({ message: 'Account not found' });
+    }
+
     return response.json(balance);
   }
 }
