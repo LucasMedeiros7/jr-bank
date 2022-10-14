@@ -61,4 +61,27 @@ describe('Create account', () => {
 
     expect(error).toBe('Invalid cpf');
   });
+
+  it('should return an error when cpf already registred', async () => {
+    let error: Error;
+
+    await createAccountUseCase.execute({
+      name: 'fakename',
+      cpf: '082.096.650-90',
+      password: 'fakepaswword'
+    });
+
+    try {
+      await createAccountUseCase.execute({
+        name: 'fakename',
+        cpf: '082.096.650-90',
+        password: 'fakepaswword'
+      });
+    } catch (err) {
+      error = err;
+    }
+
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toBe('CPF already registered to an account');
+  });
 });
