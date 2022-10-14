@@ -12,7 +12,7 @@ class CreateAccountController {
 
     try {
       await createAccountUseCase.execute({ name, cpf, password });
-      return response.sendStatus(201);
+      return response.status(201).json({ message: 'Account created' });
     } catch (e) {
       return response.status(500).json({ error: e.message });
     }

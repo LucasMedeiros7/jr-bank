@@ -6,7 +6,7 @@ describe('Validate CPF', () => {
   });
 
   it('should receive a valid cpf with no characters and return the formatted cpf', () => {
-    expect(validateCPF('85421968057')).toBe('854.219.680-57');
+    expect(validateCPF('08209665090')).toBe('082.096.650-90');
   });
 
   it('should return "Invalid cpf" when the cpf passed is invalid', () => {

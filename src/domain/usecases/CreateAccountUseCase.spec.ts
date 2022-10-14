@@ -1,7 +1,7 @@
 import { InMemoryAccountRepository } from '../../infra/repositories/InMemoryAccountRepository';
 import { CreateAccountUseCase } from './CreateAccountUseCase';
 
-describe('Create account', () => {
+describe('Create account use case', () => {
   let accountRepository: InMemoryAccountRepository;
   let createAccountUseCase: CreateAccountUseCase;
 
@@ -65,13 +65,13 @@ describe('Create account', () => {
   it('should return an error when cpf already registred', async () => {
     let error: Error;
 
-    await createAccountUseCase.execute({
-      name: 'fakename',
-      cpf: '082.096.650-90',
-      password: 'fakepaswword'
-    });
-
     try {
+      await createAccountUseCase.execute({
+        name: 'fakename',
+        cpf: '082.096.650-90',
+        password: 'fakepaswword'
+      });
+
       await createAccountUseCase.execute({
         name: 'fakename',
         cpf: '082.096.650-90',

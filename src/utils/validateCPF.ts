@@ -39,6 +39,10 @@ function validateDigits(cpf: string): boolean {
     rest = (sum * 10) % 11;
   }
 
+  if (rest === 10 || rest === 11) {
+    rest = 0;
+  }
+
   if (rest != parseInt(cpf[9])) {
     return false;
   }
@@ -48,6 +52,10 @@ function validateDigits(cpf: string): boolean {
   for (let i = 0; i < 10; i++) {
     sum += parseInt(cpf[i]) * (12 - i - 1);
     rest = (sum * 10) % 11;
+  }
+
+  if (rest === 10 || rest === 11) {
+    rest = 0;
   }
 
   if (rest != parseInt(cpf[cpf.length - 1])) {
