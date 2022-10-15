@@ -14,12 +14,14 @@ export class CreateAccountUseCase {
 
   /**
    *
-   * # Melhorias
-   *  [] Passar a responsabilidade de modelagem da conta para a entidade/model
-   *  [] CreateAccountUseCase vai ficar responsavel em instanciar o model de conta
-   *  [] Chamar o repositório
-   *  [] Verificar se a conta já existe
-   *  [] Retornar a conta ou lançar um erro caso a conta já exista
+   * # MELHORIAS
+   *
+   *  [] Passar a responsabilidade de modelagem da conta para a entidade/model;
+   *
+   *  [] Este caso de uso vai ficar responsavel em instanciar o model de conta,
+   *  chamar o repositório, verificar se a conta já existe;
+   *
+   *  [] Retornar a conta ou lançar um erro caso a conta já exista no banco de dados;
    *
    */
 
