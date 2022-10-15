@@ -13,12 +13,13 @@ export class CreateAccountUseCase {
   constructor(private accountRepository: IAccountRepository) {}
 
   /**
+   *
    * # Melhorias
-   *  - Passar a responsabilidade de modelagem da conta para entities/model
-   *  - CreateAccountUseCase vai ficar responsavel em instanciar o model de conta
-   *  - Chamar o repositório
-   *  - Verificar se a conta já existe
-   *  - Retornar a conta ou lançar um erro caso a conta já exista
+   *  [] Passar a responsabilidade de modelagem da conta para a entidade/model
+   *  [] CreateAccountUseCase vai ficar responsavel em instanciar o model de conta
+   *  [] Chamar o repositório
+   *  [] Verificar se a conta já existe
+   *  [] Retornar a conta ou lançar um erro caso a conta já exista
    *
    */
 
