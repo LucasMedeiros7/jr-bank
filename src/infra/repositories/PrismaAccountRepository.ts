@@ -9,14 +9,16 @@ import {
 import { prisma } from '../db/database';
 
 export class PrismaAccountRepository implements IAccountRepository {
-  async create({ name, password, cpf }: ICreateAccountDTO): Promise<void> {
-    await prisma.account.create({
+  async create({ name, password, cpf }: ICreateAccountDTO): Promise<Account> {
+    const accountCreated = await prisma.account.create({
       data: {
         name,
         password,
         cpf
       }
     });
+
+    return accountCreated;
   }
 
   async getByCPF(cpf: string): Promise<Account> {

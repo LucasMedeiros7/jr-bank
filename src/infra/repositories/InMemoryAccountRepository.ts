@@ -14,7 +14,7 @@ export class InMemoryAccountRepository implements IAccountRepository {
     this.accounts = [];
   }
 
-  async create({ name, password, cpf }: ICreateAccountDTO): Promise<void> {
+  async create({ name, password, cpf }: ICreateAccountDTO): Promise<Account> {
     const account = {
       account_id: uuidv4(),
       balance: 50000,
@@ -25,6 +25,8 @@ export class InMemoryAccountRepository implements IAccountRepository {
     };
 
     this.accounts.push(account);
+
+    return account;
   }
 
   async getByCPF(cpf: string): Promise<Account> {

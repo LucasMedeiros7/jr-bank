@@ -1,5 +1,6 @@
 import { InMemoryAccountRepository } from '../../infra/repositories/InMemoryAccountRepository';
 import { CreateAccountUseCase } from './CreateAccountUseCase';
+import cryptography from '../../utils/Cryptography';
 
 describe('Create account use case', () => {
   let accountRepository: InMemoryAccountRepository;
@@ -83,5 +84,19 @@ describe('Create account use case', () => {
 
     expect(error).toBeInstanceOf(Error);
     expect(error.message).toBe('CPF already registered to an account');
+  });
+
+  it('should encrypt the password', async () => {
+    await createAccountUseCase.execute({
+      name: 'fakename',
+      cpf: '082.096.650-90',
+      password: 'fakepaswword'
+    });
+
+    const passwordSavedOnDB = accountRepository.accounts[0].password;
+
+    expect(await cryptography.compare('fakepaswword', passwordSavedOnDB)).toBe(
+      true
+    );
   });
 });

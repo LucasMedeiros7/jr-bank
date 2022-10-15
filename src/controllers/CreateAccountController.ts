@@ -11,8 +11,15 @@ class CreateAccountController {
     const createAccountUseCase = new CreateAccountUseCase(accountRepository);
 
     try {
-      await createAccountUseCase.execute({ name, cpf, password });
-      return response.status(201).json({ message: 'Account created' });
+      const accountCreated = await createAccountUseCase.execute({
+        name,
+        cpf,
+        password
+      });
+
+      console.log(accountCreated);
+
+      return response.status(201).json(accountCreated);
     } catch (e) {
       return response.status(500).json({ error: e.message });
     }

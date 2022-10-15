@@ -4,22 +4,19 @@ import { app } from '../server';
 import { prisma } from '../infra/db/database';
 
 describe('Create account', () => {
-  beforeAll(async () => {
-    await prisma.account.deleteMany();
-  });
-
   it('should create an account', async () => {
     const accountPayload = {
-      cpf: '28005264089',
+      cpf: '280.052.640-89',
       name: 'Lucas Medeiros',
       password: 'senhaforte'
     };
 
-    const { body } = await supertest(app)
-      .post('/accounts')
-      .send(accountPayload)
-      .expect(201);
+    await prisma.account.deleteMany({
+      where: {
+        cpf: accountPayload.cpf
+      }
+    });
 
-    expect(body.message).toBe('Account created');
+    await supertest(app).post('/accounts').send(accountPayload).expect(201);
   });
 });

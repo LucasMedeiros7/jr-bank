@@ -12,7 +12,7 @@ export interface IBalanceDTO {
 }
 
 export interface IAccountRepository {
-  create({ name, password, cpf }: ICreateAccountDTO): Promise<void>;
+  create({ name, password, cpf }: ICreateAccountDTO): Promise<Account>;
   getAll(): Promise<Account[]>;
   getByCPF(cpf: string): Promise<Account>;
   getBalanceById(accountId: string): Promise<IBalanceDTO>;
