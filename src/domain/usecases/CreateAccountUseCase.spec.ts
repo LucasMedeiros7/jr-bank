@@ -18,7 +18,7 @@ describe('Create account use case', () => {
       password: 'fakepaswword'
     });
 
-    const account = await accountRepository.getByCPF('011.144.380-65');
+    const account = await accountRepository.listByCpf('011.144.380-65');
 
     expect(account.cpf).toBe('011.144.380-65');
   });
@@ -48,7 +48,7 @@ describe('Create account use case', () => {
   });
 
   it('should return an error when cpf is invalid', async () => {
-    let error: string;
+    let error: Error;
 
     try {
       await createAccountUseCase.execute({
@@ -57,27 +57,25 @@ describe('Create account use case', () => {
         password: 'fakepaswword'
       });
     } catch (err) {
-      error = err.message;
+      error = err;
     }
 
-    expect(error).toBe('Invalid cpf');
+    expect(error).toBeInstanceOf(Error);
+    expect(error.message).toBe('Invalid cpf');
   });
 
   it('should return an error when cpf already registred', async () => {
+    const accountPayload = {
+      name: 'fakename',
+      cpf: '082.096.650-90',
+      password: 'fakepaswword'
+    };
+
     let error: Error;
 
     try {
-      await createAccountUseCase.execute({
-        name: 'fakename',
-        cpf: '082.096.650-90',
-        password: 'fakepaswword'
-      });
-
-      await createAccountUseCase.execute({
-        name: 'fakename',
-        cpf: '082.096.650-90',
-        password: 'fakepaswword'
-      });
+      await createAccountUseCase.execute(accountPayload);
+      await createAccountUseCase.execute(accountPayload);
     } catch (err) {
       error = err;
     }

@@ -6,14 +6,9 @@ export interface ICreateAccountDTO {
   password: string;
 }
 
-export interface IBalanceDTO {
-  account_id: string;
-  balance: number;
-}
-
 export interface IAccountRepository {
-  create({ name, password, cpf }: ICreateAccountDTO): Promise<Account>;
-  getAll(): Promise<Account[]>;
-  getByCPF(cpf: string): Promise<Account>;
-  getBalanceById(accountId: string): Promise<IBalanceDTO>;
+  save({ name, password, cpf }: ICreateAccountDTO): Promise<void>;
+  listAll(): Promise<Account[]>;
+  listByCpf(cpf: string): Promise<Account | undefined>;
+  listById(accountId: string): Promise<Account | undefined>;
 }

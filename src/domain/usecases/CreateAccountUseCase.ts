@@ -38,18 +38,18 @@ export class CreateAccountUseCase {
 
     const hashedPassword = await cryptography.hash(password);
 
-    const accountAlreadyExists = await this.accountRepository.getByCPF(cpf);
+    const accountAlreadyExists = await this.accountRepository.listByCpf(cpf);
 
     if (accountAlreadyExists) {
       throw new Error('CPF already registered to an account');
     }
 
-    const accountCreated = await this.accountRepository.create({
+    const accountCreated = await this.accountRepository.save({
       name,
       password: hashedPassword,
       cpf: validCpf
     });
 
-    return accountCreated;
+    return accountAlreadyExists;
   }
 }

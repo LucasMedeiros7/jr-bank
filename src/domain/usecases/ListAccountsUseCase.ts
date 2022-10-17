@@ -5,7 +5,7 @@ export class ListAccountsUseCase {
   constructor(private accountRepository: IAccountRepository) {}
 
   async execute(): Promise<Account[]> {
-    const accounts = await this.accountRepository.getAll();
+    const accounts = await this.accountRepository.listAll();
     return accounts;
   }
 }
