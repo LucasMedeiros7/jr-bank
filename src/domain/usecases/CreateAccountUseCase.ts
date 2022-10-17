@@ -1,6 +1,5 @@
-import cryptography from '../../utils/Cryptography';
+import { Cryptography } from '../../utils/Cryptography';
 import { validateCPF } from '../../utils/validateCPF';
-import { Account } from '../entities/Account';
 import { IAccountRepository } from '../repositories/IAccountRepository';
 
 interface IRequest {
@@ -23,8 +22,7 @@ export class CreateAccountUseCase {
       throw new Error(validCpf);
     }
 
-    const hashedPassword = await cryptography.hash(password);
-
+    const hashedPassword = await Cryptography.hash(password);
     const accountAlreadyExists = await this.accountRepository.listByCpf(cpf);
 
     if (accountAlreadyExists) {

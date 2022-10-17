@@ -1,6 +1,6 @@
 import { InMemoryAccountRepository } from '../../infra/repositories/InMemoryAccountRepository';
 import { CreateAccountUseCase } from './CreateAccountUseCase';
-import cryptography from '../../utils/Cryptography';
+import { Cryptography } from '../../utils/Cryptography';
 
 describe('Create account use case', () => {
   let accountRepository: InMemoryAccountRepository;
@@ -93,7 +93,7 @@ describe('Create account use case', () => {
 
     const passwordSavedOnDB = accountRepository.accounts[0].password;
 
-    expect(await cryptography.compare('fakepaswword', passwordSavedOnDB)).toBe(
+    expect(await Cryptography.compare('fakepaswword', passwordSavedOnDB)).toBe(
       true
     );
   });
