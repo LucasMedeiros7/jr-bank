@@ -1,22 +1,23 @@
 import { IAccountRepository } from '../repositories/IAccountRepository';
 
+type output = {
+  account_id: string;
+  balance: number;
+};
+
 export class GetBalanceByIdUseCase {
   constructor(private accountRepository: IAccountRepository) {}
 
-  async execute(
-    accountId: string
-  ): Promise<{ account_id: string; balance: number }> {
-    // loadById => {balance, account_id}
-    // substituir o getBalanceByID()
-
+  async execute(accountId: string): Promise<output> {
     const account = await this.accountRepository.listById(accountId);
 
     if (!account) {
-      throw new Error('Not found account with this id');
+      throw new Error('Invalid ID');
     }
 
-    const { account_id, balance } = account;
-
-    return { account_id, balance };
+    return {
+      account_id: account.account_id,
+      balance: account.balance
+    };
   }
 }

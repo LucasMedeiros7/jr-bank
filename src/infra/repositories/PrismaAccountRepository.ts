@@ -1,14 +1,16 @@
 import { Account } from '../../domain/entities/Account';
-
-import {
-  IAccountRepository,
-  ICreateAccountDTO
-} from '../../domain/repositories/IAccountRepository';
+import { IAccountRepository } from '../../domain/repositories/IAccountRepository';
 
 import { prisma } from '../db/database';
 
+type input = {
+  cpf: string;
+  name: string;
+  password: string;
+};
+
 export class PrismaAccountRepository implements IAccountRepository {
-  async save({ name, password, cpf }: ICreateAccountDTO): Promise<void> {
+  async save({ name, password, cpf }: input): Promise<void> {
     await prisma.account.create({ data: { name, password, cpf } });
   }
 

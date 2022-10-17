@@ -1,13 +1,13 @@
 import { Account } from '../entities/Account';
 
-export interface ICreateAccountDTO {
+type input = {
   cpf: string;
   name: string;
   password: string;
-}
+};
 
 export interface IAccountRepository {
-  save({ name, password, cpf }: ICreateAccountDTO): Promise<void>;
+  save({ name, password, cpf }: input): Promise<void>;
   listAll(): Promise<Account[]>;
   listByCpf(cpf: string): Promise<Account | undefined>;
   listById(accountId: string): Promise<Account | undefined>;

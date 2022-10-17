@@ -10,13 +10,17 @@ class GetBalanceByIdController {
     const accountRepository = new PrismaAccountRepository();
     const getBalanceById = new GetBalanceByIdUseCase(accountRepository);
 
-    const balance = await getBalanceById.execute(account_id);
+    try {
+      const balance = await getBalanceById.execute(account_id);
 
-    if (!balance) {
-      return response.status(404).json({ message: 'Account not found' });
+      if (!balance) {
+        return response.status(404).json({ message: 'Account not found' });
+      }
+
+      return response.json(balance);
+    } catch (e) {
+      return response.status(500).json({ error: e.message });
     }
-
-    return response.json(balance);
   }
 }
 

@@ -12,20 +12,7 @@ interface IRequest {
 export class CreateAccountUseCase {
   constructor(private accountRepository: IAccountRepository) {}
 
-  /**
-   *
-   * # MELHORIAS
-   *
-   *  [] Passar a responsabilidade de modelagem da conta para a entidade/model;
-   *
-   *  [] Este caso de uso vai ficar responsavel em instanciar o model de conta,
-   *  chamar o repositório, verificar se a conta já existe;
-   *
-   *  [] Retornar a conta ou lançar um erro caso a conta já exista no banco de dados;
-   *
-   */
-
-  async execute({ name, password, cpf }: IRequest): Promise<Account> {
+  async execute({ name, password, cpf }: IRequest): Promise<void> {
     if (!name || !password || !cpf) {
       throw new Error('Missing params: name, password or cpf');
     }
@@ -44,12 +31,10 @@ export class CreateAccountUseCase {
       throw new Error('CPF already registered to an account');
     }
 
-    const accountCreated = await this.accountRepository.save({
+    await this.accountRepository.save({
       name,
       password: hashedPassword,
       cpf: validCpf
     });
-
-    return accountAlreadyExists;
   }
 }
