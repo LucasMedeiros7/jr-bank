@@ -11,18 +11,14 @@ const invalidsCPFs = [
   '99999999999'
 ];
 
-export function validateCPF(strCPF: string): string {
+function validateCPF(strCPF: string): string | false {
   const cpf = clearCharactersFromCPF(strCPF);
 
-  if (invalidsCPFs.includes(cpf)) {
-    return 'Invalid cpf';
+  if (invalidsCPFs.includes(cpf) || !validateDigits(cpf)) {
+    return false;
   }
 
-  if (!validateDigits(cpf)) {
-    return 'Invalid cpf';
-  }
-
-  return addCharactersToCPF(cpf);
+  return cpf;
 }
 
 function clearCharactersFromCPF(cpf: string): string {
@@ -65,7 +61,7 @@ function validateDigits(cpf: string): boolean {
   return true;
 }
 
-function addCharactersToCPF(cpf: string): string {
+function fomartCPF(cpf: string): string {
   let cpfFormatted = '';
 
   for (let i = 0; i < cpf.length; i++) {
@@ -83,3 +79,5 @@ function addCharactersToCPF(cpf: string): string {
 
   return cpfFormatted;
 }
+
+export { validateCPF, fomartCPF };

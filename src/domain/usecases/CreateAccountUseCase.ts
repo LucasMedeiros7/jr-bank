@@ -1,5 +1,5 @@
 import { Cryptography } from '../../utils/Cryptography';
-import { validateCPF } from '../../utils/validateCPF';
+import { fomartCPF, validateCPF } from '../../utils/validateCPF';
 import { IAccountRepository } from '../repositories/IAccountRepository';
 
 interface IRequest {
@@ -18,9 +18,11 @@ export class CreateAccountUseCase {
 
     const validCpf = validateCPF(cpf);
 
-    if (validCpf === 'Invalid cpf') {
-      throw new Error(validCpf);
+    if (!validCpf) {
+      throw new Error('Invalid cpf');
     }
+
+    const cpfFormatted = fomartCPF(validCpf);
 
     const hashedPassword = await Cryptography.hash(password);
     const accountAlreadyExists = await this.accountRepository.listByCpf(cpf);
@@ -32,7 +34,7 @@ export class CreateAccountUseCase {
     await this.accountRepository.save({
       name,
       password: hashedPassword,
-      cpf: validCpf
+      cpf: cpfFormatted
     });
   }
 }
