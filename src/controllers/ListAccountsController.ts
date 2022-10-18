@@ -20,4 +20,4 @@ class ListAccountsController {
   }
 }
 
-export default new ListAccountsController();
+export const listAccountsController = new ListAccountsController();

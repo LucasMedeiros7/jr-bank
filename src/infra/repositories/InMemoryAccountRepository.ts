@@ -34,8 +34,8 @@ export class InMemoryAccountRepository implements IAccountRepository {
     return account;
   }
 
-  listAll(): Promise<Account[]> {
-    throw new Error('Method not implemented.');
+  async listAll(): Promise<Account[]> {
+    return this.accounts;
   }
 
   async listById(accountId: string): Promise<Account | undefined> {

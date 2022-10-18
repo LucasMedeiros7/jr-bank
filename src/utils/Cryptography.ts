@@ -8,8 +8,8 @@ export class Cryptography {
 
   static async compare(
     inputPassword: string,
-    password: string
+    hashedPassword: string
   ): Promise<boolean> {
-    return await bcrypt.compare(inputPassword, password);
+    return await bcrypt.compare(inputPassword, hashedPassword);
   }
 }

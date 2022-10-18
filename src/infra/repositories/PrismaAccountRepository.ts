@@ -25,9 +25,9 @@ export class PrismaAccountRepository implements IAccountRepository {
   }
 
   async listById(accountId: string): Promise<Account> {
-    const balance = await prisma.account.findUnique({
+    const account = await prisma.account.findUnique({
       where: { account_id: accountId }
     });
-    return balance;
+    return account;
   }
 }

@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-
 import { CreateAccountUseCase } from '../domain/usecases/CreateAccountUseCase';
 import { PrismaAccountRepository } from '../infra/repositories/PrismaAccountRepository';
 
@@ -26,4 +25,4 @@ class CreateAccountController {
   }
 }
 
-export default new CreateAccountController();
+export const createAccountController = new CreateAccountController();

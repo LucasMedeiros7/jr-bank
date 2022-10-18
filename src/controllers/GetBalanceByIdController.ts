@@ -24,4 +24,4 @@ class GetBalanceByIdController {
   }
 }
 
-export default new GetBalanceByIdController();
+export const getBalanceByIdController = new GetBalanceByIdController();

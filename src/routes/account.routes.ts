@@ -1,8 +1,8 @@
 import { Router } from 'express';
 
-import createAccountController from '../controllers/CreateAccountController';
-import listAccountsController from '../controllers/ListAccountsController';
-import getBalanceByIdController from '../controllers/GetBalanceByIdController';
+import { listAccountsController } from '../controllers/ListAccountsController';
+import { getBalanceByIdController } from '../controllers/GetBalanceByIdController';
+import { createAccountController } from '../controllers/CreateAccountController';
 
 const accountRoutes = Router();
 
