@@ -1,13 +1,10 @@
 import { Router } from 'express';
-
-import { listAccountsController } from '../controllers/ListAccountsController';
-import { getBalanceByIdController } from '../controllers/GetBalanceByIdController';
-import { createAccountController } from '../controllers/CreateAccountController';
+import { AccountController } from '../controllers/CreateAccountController';
 
 const accountRoutes = Router();
 
-accountRoutes.post('/', createAccountController.handle);
-accountRoutes.get('/', listAccountsController.handle);
-accountRoutes.get('/:account_id/balance', getBalanceByIdController.handle);
+accountRoutes.post('/', AccountController.create);
+accountRoutes.get('/', AccountController.getBalance);
+accountRoutes.get('/:account_id/balance', AccountController.list);
 
 export { accountRoutes };

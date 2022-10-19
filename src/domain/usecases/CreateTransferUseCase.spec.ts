@@ -1,66 +1,100 @@
-import { Transfer } from '../entities/Transfer';
-import { ITransferRepository } from '../repositories/ITransferRepository';
+// import { Transfer } from '../entities/Transfer';
+// import { ITransferRepository } from '../repositories/ITransferRepository';
 
-class CreateTransferUseCase {
-  constructor(private transferRepository: ITransferRepository) {}
+// class DebitAccountUseCase {
+//   async execute(account_id: string, amount: number): Promise<void> {
+//     // "Invalid account detination id"
+//     // implementa o repo direto nele
+//     // pega no repository pelo balance => account id find()
+//     // nao aceitar float de alguma forma para nao atrapalhar a conta
+//     // newbalance = balance - amount
+//     // update no banco => prisma.account.update(id, newbalance)
+//   }
+// }
 
-  async execute({
-    account_origin_id,
-    account_destination_id,
-    amount
-  }: input): Promise<void> {
-    await this.transferRepository.save({
-      account_origin_id,
-      account_destination_id,
-      amount
-    });
-  }
-}
-type input = {
-  account_origin_id: string;
-  account_destination_id: string;
-  amount: number;
-};
+// class CreditAccountUseCase {
+//   async execute(account_id: string, amount: number): Promise<void> {
+//     // implementa o repo direto nele
+//     // pega no repository pelo balance => account id find()
+//     // nao aceitar float de alguma forma para nao atrapalhar a conta
+//     // newbalance = balance + amount
+//     // update no banco => prisma.account.update(id, newbalance)
+//   }
+// }
 
-class InMemoryTransferRepository implements ITransferRepository {
-  transfers: Transfer[];
+// class CreateTransferUseCase {
+//   constructor(
+//     private transferRepository: ITransferRepository,
+//     private debitAccountUseCase: DebitAccountUseCase,
+//     private creditAccountUseCase: CreditAccountUseCase
+//   ) {}
 
-  constructor() {
-    this.transfers = [];
-  }
+//   async execute({
+//     account_origin_id,
+//     account_destination_id,
+//     amount
+//   }: input): Promise<void> {
+//     try {
+//       await this.debitAccountUseCase.execute(account_origin_id, amount);
+//       await this.creditAccountUseCase.execute(account_destination_id, amount);
+//     } catch (err) {
+//       throw new Error(err.message);
+//     }
 
-  async save({
-    account_origin_id,
-    account_destination_id,
-    amount
-  }: input): Promise<void> {
-    const transfer = {
-      transferId: 'faketransfer123456',
-      account_origin_id,
-      account_destination_id,
-      amount,
-      created_at: new Date()
-    };
+//     await this.transferRepository
+//       .save({
+//         account_origin_id,
+//         account_destination_id,
+//         amount
+//       })
+//       .catch((err) => console.log(err));
+//   }
+// }
+// type input = {
+//   account_origin_id: string;
+//   account_destination_id: string;
+//   amount: number;
+// };
 
-    this.transfers.push(transfer);
-  }
+// class InMemoryTransferRepository implements ITransferRepository {
+//   transfers: Transfer[];
 
-  async listAll(): Promise<Transfer[]> {
-    return this.transfers;
-  }
-}
+//   constructor() {
+//     this.transfers = [];
+//   }
 
-describe('Create transfer use case', () => {
-  it('should create an transfer', async () => {
-    const transferRepository = new InMemoryTransferRepository();
-    const createTransferUseCase = new CreateTransferUseCase(transferRepository);
+//   async save({
+//     account_origin_id,
+//     account_destination_id,
+//     amount
+//   }: input): Promise<void> {
+//     const transfer = {
+//       transferId: 'faketransfer123456',
+//       account_origin_id,
+//       account_destination_id,
+//       amount,
+//       created_at: new Date()
+//     };
 
-    createTransferUseCase.execute({
-      account_origin_id: 'any_id_Ori',
-      account_destination_id: 'any_id_Dest',
-      amount: 50
-    });
+//     this.transfers.push(transfer);
+//   }
 
-    expect(await transferRepository.listAll()).toHaveLength(1);
-  });
-});
+//   async listAll(): Promise<Transfer[]> {
+//     return this.transfers;
+//   }
+// }
+
+// describe('Create transfer use case', () => {
+//   it('should create an transfer', async () => {
+//     const transferRepository = new InMemoryTransferRepository();
+//     // const createTransferUseCase = new CreateTransferUseCase(transferRepository);
+
+//     // createTransferUseCase.execute({
+//     //   account_origin_id: 'any_id_Ori',
+//     //   account_destination_id: 'any_id_Dest',
+//     //   amount: 50
+//     // });
+
+//     expect(await transferRepository.listAll()).toHaveLength(1);
+//   });
+// });
