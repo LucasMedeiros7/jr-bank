@@ -25,7 +25,9 @@ export class CreateAccountUseCase {
     const cpfFormatted = fomartCPF(validCpf);
 
     const hashedPassword = await Cryptography.hash(password);
-    const accountAlreadyExists = await this.accountRepository.listByCpf(cpf);
+    const accountAlreadyExists = await this.accountRepository.listByCpf(
+      cpfFormatted
+    );
 
     if (accountAlreadyExists) {
       throw new Error('CPF already registered to an account');
