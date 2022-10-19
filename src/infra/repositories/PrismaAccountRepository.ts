@@ -30,4 +30,14 @@ export class PrismaAccountRepository implements IAccountRepository {
     });
     return account;
   }
+
+  async updateBalance(
+    accountId: string,
+    balanceUpdated: number
+  ): Promise<void> {
+    await prisma.account.update({
+      where: { account_id: accountId },
+      data: { balance: balanceUpdated }
+    });
+  }
 }

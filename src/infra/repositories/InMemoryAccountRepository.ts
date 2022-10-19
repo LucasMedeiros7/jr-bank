@@ -45,4 +45,15 @@ export class InMemoryAccountRepository implements IAccountRepository {
 
     return account;
   }
+
+  async updateBalance(
+    accountId: string,
+    balanceUpdated: number
+  ): Promise<void> {
+    const account = this.accounts.find(
+      (account) => account.account_id === accountId
+    );
+
+    account.balance = balanceUpdated;
+  }
 }
