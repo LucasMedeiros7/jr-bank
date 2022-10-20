@@ -10,6 +10,10 @@ export class DebitAccountUseCase {
       throw new Error('Invalid account detination id');
     }
 
+    if (amount > account.balance) {
+      throw new Error('Insufficient funds');
+    }
+
     // nao aceitar float de alguma forma para nao atrapalhar a conta
     const newBalance = account.balance - amount;
 

@@ -121,4 +121,20 @@ describe('Create transfer use case', () => {
 
     expect(origin_account.balance).toBe(40000);
   });
+
+  it('should return an error when the transfer amount is less than the total account balance', async () => {
+    const [origin_account, destination_account] =
+      await makeFakeAccountsForTest();
+
+    const transfer = {
+      account_origin_id: origin_account.account_id,
+      account_destination_id: destination_account.account_id,
+      amount: 40000
+    };
+
+    await createTransferUseCase.execute(transfer);
+    expect(async () => {
+      await createTransferUseCase.execute(transfer);
+    }).rejects.toThrowError();
+  });
 });
