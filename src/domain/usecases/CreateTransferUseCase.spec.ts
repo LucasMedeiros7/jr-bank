@@ -1,87 +1,9 @@
-import { ITransferRepository } from '../repositories/ITransferRepository';
 import { InMemoryAccountRepository } from '../../infra/repositories/InMemoryAccountRepository';
 import { InMemoryTransferRepository } from '../../infra/repositories/InMemoryTransferRepository';
 
-import { Account } from '@prisma/client';
+import { Account } from '../entities/Account';
 import { CreateAccountUseCase } from './CreateAccountUseCase';
-import { IAccountRepository } from '../repositories/IAccountRepository';
-
-type input = {
-  account_origin_id: string;
-  account_destination_id: string;
-  amount: number;
-};
-
-class TransactionUseCase {
-  constructor(private accountRepository: IAccountRepository) {}
-
-  async execute({
-    account_origin_id,
-    account_destination_id,
-    amount
-  }: input): Promise<void> {
-    const destinationAccount = await this.accountRepository.listById(
-      account_destination_id
-    );
-
-    if (!destinationAccount) {
-      throw new Error('Invalid account destination id');
-    }
-
-    await this.debitAccount(account_origin_id, amount);
-    await this.creditAccount(destinationAccount.account_id, amount);
-  }
-
-  private async debitAccount(account_id: string, amount: number) {
-    const account = await this.accountRepository.listById(account_id);
-
-    if (amount > account.balance) {
-      throw new Error('Insufficient funds');
-    }
-
-    const newBalance = account.balance - amount;
-    await this.accountRepository.updateBalance(account_id, newBalance);
-  }
-
-  private async creditAccount(account_id: string, amount: number) {
-    const account = await this.accountRepository.listById(account_id);
-    const newBalance = account.balance + amount;
-    await this.accountRepository.updateBalance(account_id, newBalance);
-  }
-}
-
-class CreateTransferUseCase {
-  constructor(
-    private transferRepository: ITransferRepository,
-    private accountRepository: IAccountRepository
-  ) {}
-
-  async execute({
-    account_origin_id,
-    account_destination_id,
-    amount
-  }: input): Promise<void> {
-    const transactionUseCase = new TransactionUseCase(this.accountRepository);
-
-    try {
-      await transactionUseCase.execute({
-        account_origin_id,
-        account_destination_id,
-        amount
-      });
-    } catch (err) {
-      throw new Error(err.message);
-    }
-
-    await this.transferRepository
-      .save({
-        account_origin_id,
-        account_destination_id,
-        amount
-      })
-      .catch((err) => console.log(err));
-  }
-}
+import { CreateTransferUseCase } from './CreateTransferUseCase';
 
 describe('Create transfer use case', () => {
   let transferRepository: InMemoryTransferRepository;
@@ -104,18 +26,17 @@ describe('Create transfer use case', () => {
 
     await createAccountUseCase.execute({
       name: 'Fulano',
-      password: '123456',
+      password: 'fulano1234567',
       cpf: '970.185.460-87'
     });
 
     await createAccountUseCase.execute({
-      name: 'Fulano2',
-      password: '1234567',
+      name: 'Ciclano',
+      password: 'ciclano1234567',
       cpf: '469.319.560-00'
     });
 
     const accountsRegistredForTest = await accountRepository.listAll();
-
     return accountsRegistredForTest;
   };
 
