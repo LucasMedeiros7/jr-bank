@@ -22,6 +22,12 @@ export class TransactionUseCase {
       throw new Error('Invalid account destination id');
     }
 
+    let isFloat = Math.round(amount) !== amount;
+
+    if (isFloat) {
+      throw new Error('The amount must be an integer');
+    }
+
     await this.debitAccount(account_origin_id, amount);
     await this.creditAccount(destinationAccount.account_id, amount);
   }

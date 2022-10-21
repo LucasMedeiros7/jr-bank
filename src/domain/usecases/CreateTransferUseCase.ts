@@ -21,22 +21,16 @@ export class CreateTransferUseCase {
   }: input): Promise<void> {
     const transactionUseCase = new TransactionUseCase(this.accountRepository);
 
-    try {
-      await transactionUseCase.execute({
-        account_origin_id,
-        account_destination_id,
-        amount
-      });
-    } catch (err) {
-      throw new Error(err.message);
-    }
+    await transactionUseCase.execute({
+      account_origin_id,
+      account_destination_id,
+      amount
+    });
 
-    await this.transferRepository
-      .save({
-        account_origin_id,
-        account_destination_id,
-        amount
-      })
-      .catch((err) => console.log(err));
+    await this.transferRepository.save({
+      account_origin_id,
+      account_destination_id,
+      amount
+    });
   }
 }

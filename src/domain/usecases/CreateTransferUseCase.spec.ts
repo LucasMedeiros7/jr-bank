@@ -40,17 +40,20 @@ describe('Create transfer use case', () => {
     return accountsRegistredForTest;
   };
 
-  it('should create an transfer', async () => {
+  it('should be able to create transfers', async () => {
     const [origin_account, destination_account] =
       await makeFakeAccountsForTest();
 
-    await createTransferUseCase.execute({
+    const transfer = {
       account_origin_id: origin_account.account_id,
       account_destination_id: destination_account.account_id,
       amount: 50
-    });
+    };
 
-    expect(await transferRepository.listAll()).toHaveLength(1);
+    await createTransferUseCase.execute(transfer);
+    await createTransferUseCase.execute(transfer);
+
+    expect(await transferRepository.listAll()).toHaveLength(2);
   });
 
   it('should debit the exact amount from the account that made the transfer', async () => {
@@ -64,6 +67,7 @@ describe('Create transfer use case', () => {
     });
 
     expect(origin_account.balance).toBe(40000);
+    expect(destination_account.balance).toBe(60000);
   });
 
   it('should credit the exact amount to the account that received the transfer', async () => {
@@ -76,6 +80,7 @@ describe('Create transfer use case', () => {
       amount: 10000
     });
 
+    expect(origin_account.balance).toBe(40000);
     expect(destination_account.balance).toBe(60000);
   });
 
@@ -91,9 +96,8 @@ describe('Create transfer use case', () => {
       amount: 40000
     };
 
-    await createTransferUseCase.execute(transfer);
-
     try {
+      await createTransferUseCase.execute(transfer);
       await createTransferUseCase.execute(transfer);
     } catch (error) {
       expectedError = error;
@@ -103,6 +107,7 @@ describe('Create transfer use case', () => {
     expect(expectedError.message).toBe('Insufficient funds');
     expect(origin_account.balance).toBe(10000);
     expect(destination_account.balance).toBe(90000);
+    expect(await transferRepository.listAll()).toHaveLength(1);
   });
 
   it('should return an error when the destination account not exists', async () => {
@@ -123,5 +128,28 @@ describe('Create transfer use case', () => {
     expect(expectedError).toBeInstanceOf(Error);
     expect(expectedError.message).toBe('Invalid account destination id');
     expect(origin_account.balance).toBe(50000);
+    expect(await transferRepository.listAll()).toHaveLength(0);
+  });
+
+  it('should return an error when the number passed is float', async () => {
+    const [origin_account, destination_account] =
+      await makeFakeAccountsForTest();
+
+    let expectedError: Error;
+
+    try {
+      await createTransferUseCase.execute({
+        account_origin_id: origin_account.account_id,
+        account_destination_id: destination_account.account_id,
+        amount: 2.5
+      });
+    } catch (error) {
+      expectedError = error;
+    }
+
+    expect(expectedError.message).toBe('The amount must be an integer');
+    expect(origin_account.balance).toBe(50000);
+    expect(destination_account.balance).toBe(50000);
+    expect(await transferRepository.listAll()).toHaveLength(0);
   });
 });
