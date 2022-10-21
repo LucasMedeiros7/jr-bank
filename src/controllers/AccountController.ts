@@ -1,17 +1,20 @@
 import { Request, Response } from 'express';
 
-import { PrismaAccountRepository } from '../infra/repositories/PrismaAccountRepository';
+import { IAccountRepository } from '../domain/repositories/IAccountRepository';
 
 import { CreateAccountUseCase } from '../domain/usecases/CreateAccountUseCase';
 import { GetBalanceByIdUseCase } from '../domain/usecases/GetBalanceByIdUseCase';
 import { ListAccountsUseCase } from '../domain/usecases/ListAccountsUseCase';
 
 export class AccountController {
-  static async create(request: Request, response: Response): Promise<Response> {
+  constructor(private accountRepository: IAccountRepository) {}
+
+  async create(request: Request, response: Response): Promise<Response> {
     const { name, cpf, password } = request.body;
 
-    const accountRepository = new PrismaAccountRepository();
-    const createAccountUseCase = new CreateAccountUseCase(accountRepository);
+    const createAccountUseCase = new CreateAccountUseCase(
+      this.accountRepository
+    );
 
     try {
       await createAccountUseCase.execute({
@@ -28,14 +31,10 @@ export class AccountController {
     }
   }
 
-  static async getBalance(
-    request: Request,
-    response: Response
-  ): Promise<Response> {
+  async getBalance(request: Request, response: Response): Promise<Response> {
     const { account_id } = request.params;
 
-    const accountRepository = new PrismaAccountRepository();
-    const getBalanceById = new GetBalanceByIdUseCase(accountRepository);
+    const getBalanceById = new GetBalanceByIdUseCase(this.accountRepository);
 
     try {
       const balance = await getBalanceById.execute(account_id);
@@ -50,9 +49,8 @@ export class AccountController {
     }
   }
 
-  static async list(_request: Request, response: Response): Promise<Response> {
-    const accountRepository = new PrismaAccountRepository();
-    const listAccountsUseCase = new ListAccountsUseCase(accountRepository);
+  async list(_request: Request, response: Response): Promise<Response> {
+    const listAccountsUseCase = new ListAccountsUseCase(this.accountRepository);
 
     const accounts = await listAccountsUseCase.execute();
 

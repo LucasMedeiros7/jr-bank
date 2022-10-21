@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import { Transfer } from '../../domain/entities/Transfer';
 import { ITransferRepository } from '../../domain/repositories/ITransferRepository';
 
@@ -20,10 +22,10 @@ export class InMemoryTransferRepository implements ITransferRepository {
     amount
   }: input): Promise<void> {
     const transfer = {
-      transferId: 'faketransfer123456',
+      amount,
       account_origin_id,
       account_destination_id,
-      amount,
+      transferId: uuidv4(),
       created_at: new Date()
     };
 
