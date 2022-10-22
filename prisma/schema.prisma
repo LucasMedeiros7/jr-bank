@@ -17,4 +17,16 @@ model Account {
   cpf        String   @unique
   balance    Int
   created_at DateTime
+
+  @@map("accounts")
+}
+
+model Transfer {
+  transferId             String   @id
+  account_origin_id      String
+  account_destination_id String
+  amount                 Int
+  created_at             DateTime
+
+  @@map("transfers")
 }

@@ -1,3 +1,4 @@
+import { Transfer } from '../entities/Transfer';
 import { IAccountRepository } from '../repositories/IAccountRepository';
 import { ITransferRepository } from '../repositories/ITransferRepository';
 import { TransactionUseCase } from './TransactionUseCase';
@@ -18,19 +19,21 @@ export class CreateTransferUseCase {
     account_origin_id,
     account_destination_id,
     amount
-  }: input): Promise<void> {
+  }: input): Promise<Transfer> {
+    const transfer = new Transfer({
+      account_origin_id,
+      account_destination_id,
+      amount
+    });
+
     const transactionUseCase = new TransactionUseCase(this.accountRepository);
-
     await transactionUseCase.execute({
-      account_origin_id,
-      account_destination_id,
-      amount
+      account_origin_id: transfer.account_origin_id,
+      account_destination_id: transfer.account_destination_id,
+      amount: transfer.amount
     });
 
-    await this.transferRepository.save({
-      account_origin_id,
-      account_destination_id,
-      amount
-    });
+    await this.transferRepository.save(transfer);
+    return transfer;
   }
 }

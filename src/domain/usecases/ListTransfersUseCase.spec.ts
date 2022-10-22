@@ -3,6 +3,7 @@ import { InMemoryTransferRepository } from '../../infra/repositories/in-memory/I
 import { CreateTransferUseCase } from './CreateTransferUseCase';
 
 import { Account } from '../entities/Account';
+import { CreateAccountUseCase } from './CreateAccountUseCase';
 
 describe('List all transfers use case', () => {
   let createTransferUseCase: CreateTransferUseCase;
@@ -14,20 +15,19 @@ describe('List all transfers use case', () => {
     accountRepository = new InMemoryAccountRepository();
     transferRepository = new InMemoryTransferRepository();
 
-    const accountCiclano = new Account({
+    const createAccountUseCase = new CreateAccountUseCase(accountRepository);
+
+    await createAccountUseCase.execute({
       name: 'Ciclano',
       password: 'ciclano1234567',
       cpf: '469.319.560-00'
     });
 
-    const accountFulano = new Account({
+    await createAccountUseCase.execute({
       name: 'Fulano',
       password: 'fulano1234567',
       cpf: '970.185.460-87'
     });
-
-    await accountRepository.save(accountCiclano);
-    await accountRepository.save(accountFulano);
   });
 
   const createTransferForTest = async (
