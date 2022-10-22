@@ -23,6 +23,7 @@ export class AccountController {
         password
       });
 
+      account.password = undefined;
       return response.status(201).json(account);
     } catch (e) {
       return response.status(409).json({ error: e.message });
