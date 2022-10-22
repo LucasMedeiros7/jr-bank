@@ -5,7 +5,7 @@ import { ITransferRepository } from '../domain/repositories/ITransferRepository'
 import { CreateTransferUseCase } from '../domain/usecases/CreateTransferUseCase';
 import { ListTransfersUseCase } from '../domain/usecases/ListTransfersUseCase';
 
-export class AccountController {
+export class TransfersController {
   constructor(
     private accountRepository: IAccountRepository,
     private transferRepository: ITransferRepository
