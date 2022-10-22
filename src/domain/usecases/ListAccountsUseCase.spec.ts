@@ -1,4 +1,4 @@
-import { InMemoryAccountRepository } from '../../infra/repositories/InMemoryAccountRepository';
+import { InMemoryAccountRepository } from '../../infra/repositories/in-memory/InMemoryAccountRepository';
 import { CreateAccountUseCase } from './CreateAccountUseCase';
 import { ListAccountsUseCase } from './ListAccountsUseCase';
 

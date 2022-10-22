@@ -1,5 +1,5 @@
-import { InMemoryAccountRepository } from '../../infra/repositories/InMemoryAccountRepository';
-import { InMemoryTransferRepository } from '../../infra/repositories/InMemoryTransferRepository';
+import { InMemoryAccountRepository } from '../../infra/repositories/in-memory/InMemoryAccountRepository';
+import { InMemoryTransferRepository } from '../../infra/repositories/in-memory/InMemoryTransferRepository';
 
 import { Account } from '../entities/Account';
 import { CreateAccountUseCase } from './CreateAccountUseCase';

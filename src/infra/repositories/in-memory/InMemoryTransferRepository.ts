@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { Transfer } from '../../domain/entities/Transfer';
-import { ITransferRepository } from '../../domain/repositories/ITransferRepository';
+import { Transfer } from '../../../domain/entities/Transfer';
+import { ITransferRepository } from '../../../domain/repositories/ITransferRepository';
 
 type input = {
   account_origin_id: string;

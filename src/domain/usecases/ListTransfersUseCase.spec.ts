@@ -1,5 +1,5 @@
-import { InMemoryAccountRepository } from '../../infra/repositories/InMemoryAccountRepository';
-import { InMemoryTransferRepository } from '../../infra/repositories/InMemoryTransferRepository';
+import { InMemoryAccountRepository } from '../../infra/repositories/in-memory/InMemoryAccountRepository';
+import { InMemoryTransferRepository } from '../../infra/repositories/in-memory/InMemoryTransferRepository';
 import { CreateTransferUseCase } from './CreateTransferUseCase';
 
 describe('List all transfers use case', () => {

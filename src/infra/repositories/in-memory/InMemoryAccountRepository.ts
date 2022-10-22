@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { Account } from '../../domain/entities/Account';
-import { IAccountRepository } from '../../domain/repositories/IAccountRepository';
+import { Account } from '../../../domain/entities/Account';
+import { IAccountRepository } from '../../../domain/repositories/IAccountRepository';
 
 type input = {
   cpf: string;
