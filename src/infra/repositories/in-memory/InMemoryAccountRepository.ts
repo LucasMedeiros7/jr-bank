@@ -1,13 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import { Account } from '../../../domain/entities/Account';
 import { IAccountRepository } from '../../../domain/repositories/IAccountRepository';
-
-type input = {
-  cpf: string;
-  name: string;
-  password: string;
-};
 
 export class InMemoryAccountRepository implements IAccountRepository {
   accounts: Account[];
@@ -16,16 +8,7 @@ export class InMemoryAccountRepository implements IAccountRepository {
     this.accounts = [];
   }
 
-  async save({ name, password, cpf }: input): Promise<void> {
-    const account = {
-      account_id: uuidv4(),
-      balance: 50000,
-      created_at: new Date(),
-      name,
-      password,
-      cpf
-    };
-
+  async save(account: Account): Promise<void> {
     this.accounts.push(account);
   }
 

@@ -1,5 +1,6 @@
 import { Cryptography } from '../../utils/Cryptography';
 import { fomartCPF, validateCPF } from '../../utils/validateCPF';
+import { Account } from '../entities/Account';
 import { IAccountRepository } from '../repositories/IAccountRepository';
 
 interface IRequest {
@@ -11,32 +12,34 @@ interface IRequest {
 export class CreateAccountUseCase {
   constructor(private accountRepository: IAccountRepository) {}
 
-  async execute({ name, password, cpf }: IRequest): Promise<void> {
+  async execute({ name, password, cpf }: IRequest): Promise<Account> {
     if (!name || !password || !cpf) {
       throw new Error('Missing params: name, password or cpf');
     }
 
-    const validCpf = validateCPF(cpf);
-
-    if (!validCpf) {
+    if (!validateCPF(cpf)) {
       throw new Error('Invalid cpf');
     }
 
-    const cpfFormatted = fomartCPF(validCpf);
-
+    const cpfFormatted = fomartCPF(cpf);
     const hashedPassword = await Cryptography.hash(password);
+
+    const newAccount = new Account({
+      name,
+      password: hashedPassword,
+      cpf: cpfFormatted
+    });
+
     const accountAlreadyExists = await this.accountRepository.listByCpf(
-      cpfFormatted
+      newAccount.cpf
     );
 
     if (accountAlreadyExists) {
       throw new Error('CPF already registered to an account');
     }
 
-    await this.accountRepository.save({
-      name,
-      password: hashedPassword,
-      cpf: cpfFormatted
-    });
+    await this.accountRepository.save(newAccount);
+
+    return newAccount;
   }
 }

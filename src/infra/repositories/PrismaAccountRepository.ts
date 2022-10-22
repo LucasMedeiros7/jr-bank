@@ -10,8 +10,8 @@ type input = {
 };
 
 export class PrismaAccountRepository implements IAccountRepository {
-  async save({ name, password, cpf }: input): Promise<void> {
-    await prisma.account.create({ data: { name, password, cpf } });
+  async save(account: Account): Promise<void> {
+    await prisma.account.create({ data: account });
   }
 
   async listByCpf(cpf: string): Promise<Account> {

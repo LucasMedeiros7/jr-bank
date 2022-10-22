@@ -1,29 +1,20 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:../src/infra/db/dev.db"
+  url      = env("DATABASE_URL")
 }
 
 model Account {
-  account_id String   @id @default(uuid())
+  account_id String   @id
   name       String
   password   String
   cpf        String   @unique
-  balance    Int      @default(50000)
-  created_at DateTime @default(now())
-
-  @@map("accounts")
-}
-
-model Transfer {
-  transferId             String   @id @default(uuid())
-  account_origin_id      String
-  account_destination_id String
-  amount                 Int
-  created_at             DateTime @default(now())
-
-  @@map("transfers")
+  balance    Int
+  created_at DateTime
 }

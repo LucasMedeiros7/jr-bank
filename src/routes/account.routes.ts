@@ -12,10 +12,10 @@ accountRoutes.post('/', (request, response) => {
   accountController.create(request, response);
 });
 accountRoutes.get('/', (request, response) => {
-  accountController.getBalance(request, response);
+  accountController.list(request, response);
 });
 accountRoutes.get('/:account_id/balance', (request, response) => {
-  accountController.list(request, response);
+  accountController.getBalance(request, response);
 });
 
 export { accountRoutes };

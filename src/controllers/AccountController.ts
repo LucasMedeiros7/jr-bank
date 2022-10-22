@@ -17,17 +17,15 @@ export class AccountController {
     );
 
     try {
-      await createAccountUseCase.execute({
+      const account = await createAccountUseCase.execute({
         name,
         cpf,
         password
       });
 
-      return response
-        .status(201)
-        .json({ message: 'Account created successfully' });
+      return response.status(201).json(account);
     } catch (e) {
-      return response.status(500).json({ error: e.message });
+      return response.status(409).json({ error: e.message });
     }
   }
 
