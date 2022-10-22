@@ -1,19 +1,13 @@
+import { prisma } from '../db/database';
 import { Transfer } from '../../domain/entities/Transfer';
 import { ITransferRepository } from '../../domain/repositories/ITransferRepository';
 
-class PrismaTransferRepository implements ITransferRepository {
-  save({
-    account_origin_id,
-    account_destination_id,
-    amount
-  }: {
-    account_origin_id: string;
-    account_destination_id: string;
-    amount: number;
-  }): Promise<void> {
-    throw new Error('Method not implemented.');
+export class PrismaTransferRepository implements ITransferRepository {
+  async save(transfer: Transfer): Promise<void> {
+    await prisma.transfer.create({ data: transfer });
   }
-  listAll(): Promise<Transfer[]> {
-    throw new Error('Method not implemented.');
+  async listAll(): Promise<Transfer[]> {
+    const transfers = await prisma.transfer.findMany();
+    return transfers;
   }
 }
