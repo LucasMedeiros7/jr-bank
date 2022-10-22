@@ -2,8 +2,8 @@ import { InMemoryAccountRepository } from '../../infra/repositories/in-memory/In
 import { InMemoryTransferRepository } from '../../infra/repositories/in-memory/InMemoryTransferRepository';
 import { CreateTransferUseCase } from './CreateTransferUseCase';
 
-import { Account } from '../entities/Account';
 import { CreateAccountUseCase } from './CreateAccountUseCase';
+import { ListTransfersUseCase } from './ListTransfersUseCase';
 
 describe('List all transfers use case', () => {
   let createTransferUseCase: CreateTransferUseCase;
@@ -11,9 +11,12 @@ describe('List all transfers use case', () => {
   let accountRepository: InMemoryAccountRepository;
   let transferRepository: InMemoryTransferRepository;
 
+  let listTransfersUseCase: ListTransfersUseCase;
+
   beforeEach(async () => {
     accountRepository = new InMemoryAccountRepository();
     transferRepository = new InMemoryTransferRepository();
+    listTransfersUseCase = new ListTransfersUseCase(transferRepository);
 
     const createAccountUseCase = new CreateAccountUseCase(accountRepository);
 
@@ -56,7 +59,7 @@ describe('List all transfers use case', () => {
       5
     );
 
-    expect(await transferRepository.listAll()).toHaveLength(5);
+    expect(await listTransfersUseCase.execute()).toHaveLength(5);
   });
 
   it('should list 100 registered transfers', async () => {
@@ -66,6 +69,6 @@ describe('List all transfers use case', () => {
       100
     );
 
-    expect(await transferRepository.listAll()).toHaveLength(100);
+    expect(await listTransfersUseCase.execute()).toHaveLength(100);
   });
 });
