@@ -1,13 +1,6 @@
+import { prisma } from '../db/database';
 import { Account } from '../../domain/entities/Account';
 import { IAccountRepository } from '../../domain/repositories/IAccountRepository';
-
-import { prisma } from '../db/database';
-
-type input = {
-  cpf: string;
-  name: string;
-  password: string;
-};
 
 export class PrismaAccountRepository implements IAccountRepository {
   async save(account: Account): Promise<void> {
@@ -31,10 +24,7 @@ export class PrismaAccountRepository implements IAccountRepository {
     return account;
   }
 
-  async updateBalance(
-    accountId: string,
-    balanceUpdated: number
-  ): Promise<void> {
+  async updateBalance(accountId: string, balanceUpdated: number): Promise<void> {
     await prisma.account.update({
       where: { account_id: accountId },
       data: { balance: balanceUpdated }
