@@ -4,5 +4,5 @@ export function convertToBRLFormat(integer: number) {
     style: 'currency',
     currency: 'BRL'
   });
-  return 'R$ ' + formatted.replace('R$', '').trim();
+  return 'R$' + formatted.replace('R$', '').trim();
 }

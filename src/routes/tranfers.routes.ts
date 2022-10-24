@@ -13,18 +13,18 @@ const transfersController = new TransfersController(
   transferRepository
 );
 
-// function authMiddleware(request: Request, response: Response, next: Function) {
-//   const { authorization } = request.headers;
+function authMiddleware(request: Request, response: Response, next: Function) {
+  const { authorization } = request.headers;
 
-//   const token = authorization.split(' ')[1]
-//   const account_origin_id = // JWT
+  // const token = authorization.split(' ')[1];
+  // const account_origin_id = // JWT
 
-//   request.account_origin_id = authorization;
+  request.account_origin_id = authorization;
 
-//   next();
-// }
+  next();
+}
 
-transfersRoutes.post('/', (request, response) => {
+transfersRoutes.post('/', authMiddleware, (request, response) => {
   transfersController.create(request, response);
 });
 transfersRoutes.get('/', (request, response) => {

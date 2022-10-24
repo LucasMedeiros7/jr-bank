@@ -4,6 +4,7 @@ import { IAccountRepository } from '../domain/repositories/IAccountRepository';
 import { ITransferRepository } from '../domain/repositories/ITransferRepository';
 import { CreateTransferUseCase } from '../domain/usecases/CreateTransferUseCase';
 import { ListTransfersUseCase } from '../domain/usecases/ListTransfersUseCase';
+import { convertToBRLFormat } from '../utils/convertToBRLFormat';
 
 export class TransfersController {
   constructor(
@@ -27,7 +28,10 @@ export class TransfersController {
         amount
       });
 
-      return response.status(201).json(transfer);
+      return response.status(201).json({
+        ...transfer,
+        amount: convertToBRLFormat(transfer.amount)
+      });
     } catch (e) {
       return response.status(409).json({ error: e.message });
     }
@@ -37,13 +41,19 @@ export class TransfersController {
     const listAccountsUseCase = new ListTransfersUseCase(
       this.transferRepository
     );
-
     const transfers = await listAccountsUseCase.execute();
 
     if (!transfers.length) {
       return response.status(404).json({ message: 'Transfers not found' });
     }
 
-    return response.json(transfers);
+    const transfersResponse = transfers.map((transfer) => {
+      return {
+        ...transfer,
+        amount: convertToBRLFormat(transfer.amount)
+      };
+    });
+
+    return response.json(transfersResponse);
   }
 }
