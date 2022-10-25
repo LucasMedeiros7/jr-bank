@@ -55,7 +55,6 @@ npm run dev
 
 ## Rotas disponíveis
 
-<br/>
 
 #### POST `/accounts`
 
