@@ -32,8 +32,6 @@
 
 ## Como rodar o projeto 🎡👨‍💻
 
-<br/>
-
 ### É necessário ter o [Git](https://git-scm.com/downloads) e a versão LTS do [NodeJS](https://nodejs.org/) instalados.
 
 ```bash
