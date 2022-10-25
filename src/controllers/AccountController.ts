@@ -12,7 +12,6 @@ export class AccountController {
 
   async create(request: Request, response: Response): Promise<Response> {
     const { name, cpf, password } = request.body;
-
     const createAccountUseCase = new CreateAccountUseCase(
       this.accountRepository
     );
@@ -36,19 +35,18 @@ export class AccountController {
 
   async getBalance(request: Request, response: Response): Promise<Response> {
     const { account_id } = request.params;
-
     const getBalanceById = new GetBalanceByIdUseCase(this.accountRepository);
 
     try {
-      const balance = await getBalanceById.execute(account_id);
+      const { balance } = await getBalanceById.execute(account_id);
 
       if (!balance) {
         return response.status(404).json({ message: 'Account not found' });
       }
 
       return response.json({
-        ...balance,
-        balance: convertToBRLFormat(balance.balance)
+        account_id,
+        balance: convertToBRLFormat(balance)
       });
     } catch (e) {
       return response.status(500).json({ error: e.message });
