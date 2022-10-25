@@ -1,3 +1,5 @@
+<img width="330" height="220" src="https://uploaddeimagens.com.br/images/004/075/323/full/WhatsApp_Image_2022-10-24_at_23.21.15.png?1666664874" alt="Jr Bank" align="right" />
+
 # JR Bank 🏦
 
 ### O JR Bank é uma API de transferências entre contas internas de um banco digital. 🪙💸🪙
