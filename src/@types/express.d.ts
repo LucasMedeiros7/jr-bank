@@ -1,5 +1,5 @@
 declare namespace Express {
   export interface Request {
-    account_origin_id: string;
+    account_origin_id: any;
   }
 }
