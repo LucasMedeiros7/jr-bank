@@ -32,9 +32,7 @@ export class AccountLoginUseCase {
     const token = JWT.sign(
       { accountId: account.account_id },
       process.env.ACCESS_TOKEN_SECRET,
-      {
-        expiresIn: '24h'
-      }
+      { expiresIn: '1h' }
     );
 
     return { accessToken: token };

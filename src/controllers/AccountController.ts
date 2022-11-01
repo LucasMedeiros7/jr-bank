@@ -22,7 +22,6 @@ export class AccountController {
         cpf,
         password
       });
-
       return response.status(201).json({
         ...account,
         password: undefined,

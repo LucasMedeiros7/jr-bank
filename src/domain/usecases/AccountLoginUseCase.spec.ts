@@ -26,7 +26,6 @@ describe('Account Login', () => {
     });
 
     expect(response).toHaveProperty('accessToken');
-    console.log(response.accessToken);
   });
 
   it('should return an error when cpf is not a registered account', async () => {
