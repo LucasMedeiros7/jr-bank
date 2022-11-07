@@ -18,13 +18,18 @@ export class PrismaAccountRepository implements IAccountRepository {
   }
 
   async listById(accountId: string): Promise<Account> {
+    // console.log(accountId, 'log');
+
     const account = await prisma.account.findUnique({
       where: { account_id: accountId }
     });
     return account;
   }
 
-  async updateBalance(accountId: string, balanceUpdated: number): Promise<void> {
+  async updateBalance(
+    accountId: string,
+    balanceUpdated: number
+  ): Promise<void> {
     await prisma.account.update({
       where: { account_id: accountId },
       data: { balance: balanceUpdated }

@@ -3,6 +3,7 @@ dotenv.config();
 
 import JWT from 'jsonwebtoken';
 import { Cryptography } from '../../utils/Cryptography';
+import { fomartCPF } from '../../utils/validateCPF';
 import { IAccountRepository } from '../repositories/IAccountRepository';
 
 type input = {
@@ -14,7 +15,7 @@ export class AccountLoginUseCase {
   constructor(private accountRepository: IAccountRepository) {}
 
   async execute({ cpf, password }: input): Promise<{ accessToken: string }> {
-    const account = await this.accountRepository.listByCpf(cpf);
+    const account = await this.accountRepository.listByCpf(fomartCPF(cpf));
 
     if (!account) {
       throw new Error('Non-existing account');
